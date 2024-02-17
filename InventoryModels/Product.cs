@@ -5,8 +5,7 @@ namespace InventoryModels;
 public class Product : InventoryItem
 {
     public ObservableCollection<Part> AssociatedParts { get; } = new();
-    public int ProductID { get; set; }
-    public override int Id { get => ProductID; set => ProductID = value; }
+    public int ProductID { get => Id; set => Id = value; }
 
     public void AddAssociatedPart(Part part)
     {
@@ -20,4 +19,7 @@ public class Product : InventoryItem
     {
         return AssociatedParts.FirstOrDefault(part => part.PartID == partID);
     }
+
+    public Product(InventoryItem item) : base(item) { }
+    public Product() { }
 }

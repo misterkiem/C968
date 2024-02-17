@@ -2,6 +2,8 @@
 
 public abstract class Part : InventoryItem
 {
-    public int PartID { get; set; }
-    public override int Id { get => PartID; set => PartID = value; }
+    public int PartID { get => Id; set => Id = value; }
+
+    public Part(InventoryItem item) : base(item) { }
+    public Part() { }
 }
