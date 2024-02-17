@@ -9,16 +9,6 @@ namespace InventoryManager.Wpf.Views
     /// </summary>
     public partial class InventorySearchBar : UserControl
     {
-        public InventorySearchBarVm Vm
-        {
-            get { return (InventorySearchBarVm)GetValue(VmProperty); }
-            set { SetValue(VmProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Vm.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty VmProperty =
-            DependencyProperty.Register("Vm", typeof(InventorySearchBarVm), typeof(InventorySearchBar), new PropertyMetadata(null));
-
         public InventorySearchBar()
         {
             InitializeComponent();

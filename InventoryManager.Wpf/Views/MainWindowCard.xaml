@@ -18,7 +18,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <local:InventorySearchBar DataContext="{Binding SearchBarVm}"/>
+        <local:InventorySearchBar DataContext="{Binding SearchBarVm}" Margin="5"/>
         <Label Grid.Row="1"
                d:Content="Placeholder"
                Content="{Binding CardTitle}" />

@@ -6,10 +6,10 @@
              xmlns:local="clr-namespace:InventoryManager.Wpf.Views"
              xmlns:vm="clr-namespace:InventoryManager.Wpf.Vms"
              mc:Ignorable="d"
-             d:DesignHeight="40"
+             Height="Auto"
              d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=vm:InventorySearchBarVm}">
-    <Grid>
+    <Grid Height="Auto">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width=".5*" />
             <ColumnDefinition Width="Auto" />
@@ -17,10 +17,13 @@
         </Grid.ColumnDefinitions>
         <Button Grid.Column="1"
                 Margin="0, 0, 10, 0"
+                Height="Auto"
+                Padding="5"
                 Content="Search"
                 Command="{Binding SearchCommand}" />
         <TextBox Grid.Column="2"
                  VerticalContentAlignment="Center"
+                 Height="Auto"
                  Width="Auto"
                  Text="{Binding SearchText}" />
     </Grid>
