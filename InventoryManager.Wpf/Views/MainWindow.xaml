@@ -27,8 +27,8 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <local:ItemCard DataContext="{Binding PartsCardVm}"/>
-            <local:ItemCard Grid.Column="1" DataContext="{Binding ProductsCardVm}" />
+            <local:MainWindowCard DataContext="{Binding PartsCardVm}"/>
+            <local:MainWindowCard Grid.Column="1" DataContext="{Binding ProductsCardVm}" />
         </Grid>
     </Grid>
 </Window>

@@ -50,7 +50,8 @@
             </Label>
             <RadioButton Content="In-House"
                          IsChecked="{Binding IsInHouse}" />
-            <RadioButton Content="Outsourced" IsChecked="{Binding IsOutsourced, Mode=OneTime}"/>
+            <RadioButton Content="Outsourced"
+                         IsChecked="{Binding IsOutsourced, Mode=OneTime}" />
         </StackPanel>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -59,11 +60,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="5*" />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.Resources>
@@ -101,42 +98,8 @@
                             Value="0,10" />
                 </Style>
             </Grid.Resources>
-            <TextBlock Text="ID" />
-            <TextBox Grid.Column="1"
-                     IsEnabled="False"
-                     Text="{Binding Id}" />
-            <TextBlock Text="Name"
-                       Grid.Row="1" />
-            <TextBox Grid.Column="1"
-                     Grid.Row="1"
-                     Text="{Binding Name}" />
-            <TextBlock Text="Inventory"
-                       Grid.Row="2" />
-            <TextBox Grid.Column="1"
-                     Grid.Row="2"
-                     Text="{Binding InStock}" />
-            <TextBlock Text="Price / Cost"
-                       Grid.Row="3" />
-            <TextBox Grid.Column="1"
-                     Grid.Row="3"
-                     Text="{Binding Price}" />
-            <TextBlock Text="Max"
-                       Grid.Row="4" />
-            <Grid Grid.Row="4"
-                  Grid.Column="1"
-                  Grid.ColumnSpan="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width=".5*" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <TextBox Text="{Binding Max}" />
-                <TextBlock Grid.Column="1"
-                           Text="Min" />
-                <TextBox Grid.Column="2"
-                         Margin="0,10,10,10"
-                         Text="{Binding Min}" />
-            </Grid>
+            <local:InventoryItemCard Grid.ColumnSpan="3"
+                                     DataContext="{Binding CardVm}" />
             <ContentControl Grid.Row="5"
                             Grid.ColumnSpan="2"
                             IsTabStop="False">
@@ -148,7 +111,7 @@
                         </DataTemplate.Resources>
                         <UniformGrid Rows="1">
                             <TextBlock Text="Machine ID" />
-                            <TextBox Text="{Binding DataContext.MachineId, RelativeSource={RelativeSource AncestorType=ContentControl}}"/>
+                            <TextBox Text="{Binding DataContext.MachineId, RelativeSource={RelativeSource AncestorType=ContentControl}}" />
                         </UniformGrid>
                     </DataTemplate>
                     <DataTemplate x:Key="OutsourcedTemplate">
@@ -158,7 +121,7 @@
                         </DataTemplate.Resources>
                         <UniformGrid Rows="1">
                             <TextBlock Text="Company Name" />
-                            <TextBox Text="{Binding DataContext.CompanyName, RelativeSource={RelativeSource AncestorType=ContentControl}}"/>
+                            <TextBox Text="{Binding DataContext.CompanyName, RelativeSource={RelativeSource AncestorType=ContentControl}}" />
                         </UniformGrid>
                     </DataTemplate>
                 </ContentControl.Resources>

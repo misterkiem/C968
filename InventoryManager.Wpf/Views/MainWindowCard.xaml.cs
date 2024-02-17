@@ -7,9 +7,9 @@ namespace InventoryManager.Wpf.Views
     /// <summary>
     /// Interaction logic for ItemCard.xaml
     /// </summary>
-    public partial class ItemCard : UserControl
+    public partial class MainWindowCard : UserControl
     {
-        public ItemCard()
+        public MainWindowCard()
         {
             InitializeComponent();
         }

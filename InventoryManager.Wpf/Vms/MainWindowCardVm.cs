@@ -11,7 +11,7 @@ using System.Windows.Data;
 
 namespace InventoryManager.Wpf.Vms
 {
-    public partial class ItemCardVm : ObservableRecipient
+    public partial class MainWindowCardVm : ObservableRecipient
     {
         string itemFilter = string.Empty;
 

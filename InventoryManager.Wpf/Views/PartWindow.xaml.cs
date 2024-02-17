@@ -11,7 +11,7 @@ namespace InventoryManager.Wpf.Views
     {
         public PartCard()
         {
-            DataContext = new PartWindowVm(SampleData.SampleInventory);
+            DataContext = new PartWindowVm(SampleData.SampleInventory.GetNextPartId());
             InitializeComponent();
         }
     }
