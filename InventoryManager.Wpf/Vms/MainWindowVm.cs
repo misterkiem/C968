@@ -1,16 +1,26 @@
-﻿using InventoryModels;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using InventoryModels;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace InventoryManager.Wpf.Vms;
 
-public class MainWindowVm
+public partial class MainWindowVm : ObservableObject
 {
-    public Inventory Inventory { get; set; } = SampleData.SampleInventory;
+    public Inventory Inventory { get; set; }
     public MainWindowCardVm PartsCardVm { get; } 
     public MainWindowCardVm ProductsCardVm { get; }
 
-    public MainWindowVm()
+    [ObservableProperty]
+    Part? _selectedPart;
+
+    [ObservableProperty]
+    Product? _selectedProduct;
+
+    public MainWindowVm(Inventory inventory)
     {
-        PartsCardVm = new(Inventory.AllParts) { CardTitle = "Parts", IdHeader = "Part ID" };
-        ProductsCardVm = new(Inventory.Products) { CardTitle = "Products", IdHeader = "Product ID" };
+        Inventory = inventory;
+        PartsCardVm = new(new(Inventory.AllParts)) { CardTitle = "Parts", IdHeader = "Part ID" };
+        ProductsCardVm = new(new(Inventory.Products)) { CardTitle = "Products", IdHeader = "Product ID" };
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using InventoryModels;
+using System.Windows;
 
 namespace InventoryManager.Wpf.Views;
 
@@ -7,9 +8,11 @@ namespace InventoryManager.Wpf.Views;
 /// </summary>
 public partial class MainWindow : Window
 { 
+    Inventory inventory = SampleData.SampleInventory;
+
     public MainWindow()
     {
-        DataContext = new Vms.MainWindowVm();
+        DataContext = new Vms.MainWindowVm(inventory);
         InitializeComponent();
     }
 }

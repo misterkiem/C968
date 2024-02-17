@@ -18,20 +18,22 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <local:InventorySearchBar DataContext="{Binding SearchBarVm}" Margin="5"/>
+        <local:InventorySearchBar DataContext="{Binding SearchBarVm}"
+                                  Margin="5" />
         <Label Grid.Row="1"
                d:Content="Placeholder"
                Content="{Binding CardTitle}" />
         <local:InventoryGrid Grid.Row="2"
+                             SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}"
                              IdHeader="{Binding IdHeader}"
-                             ItemsSource="{Binding Items}" />
+                             ItemsSource="{Binding ItemsView}" />
         <StackPanel Grid.Row="3"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     Height="Auto">
             <Button Content="Add" />
             <Button Content="Modify" />
-            <Button Content="Delete" />
+            <Button Content="Delete" Command="{Binding DeleteItemCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

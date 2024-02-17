@@ -25,6 +25,21 @@ namespace InventoryManager.Wpf.Views
         public static readonly DependencyProperty IdHeaderProperty =
             DependencyProperty.Register("IdHeader", typeof(string), typeof(InventoryGrid), new PropertyMetadata(null));
 
+
+
+        public object SelectedItem
+        {
+            get { return GetValue(SelectedItemProperty); }
+            set { SetValue(SelectedItemProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SelectedItem.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SelectedItemProperty =
+            DependencyProperty.Register("SelectedItem", typeof(object), typeof(InventoryGrid), new PropertyMetadata(null));
+
+
+
+
         public InventoryGrid()
         {
             InitializeComponent();

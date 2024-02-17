@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using InventoryModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,6 @@ namespace InventoryManager.Wpf.Vms
 {
     public partial class MainWindowCardVm : ObservableRecipient
     {
-
         [ObservableProperty]
         string cardTitle = string.Empty;
 
@@ -21,16 +21,26 @@ namespace InventoryManager.Wpf.Vms
         string idHeader = string.Empty;
 
         [ObservableProperty]
-        ICollectionView _items;
+        ListCollectionView _itemsView;
+
+        [ObservableProperty]
+        InventoryItem? _selectedItem;
 
         [ObservableProperty]
         InventorySearchBarVm _searchBarVm;
 
-        public MainWindowCardVm(IEnumerable<InventoryItem> items)
+        public MainWindowCardVm(ListCollectionView itemsView)
         {
-            var view = CollectionViewSource.GetDefaultView(items);
-            SearchBarVm = new(view);
-            Items = view;
+            SearchBarVm = new(itemsView);
+            ItemsView = itemsView;
+        }
+
+        [RelayCommand]
+        public void DeleteItem()
+        {
+            if (SelectedItem is null) return;
+            if (ItemsView.Contains(SelectedItem)) { ItemsView.Remove(SelectedItem); }
+
         }
     } 
 }
