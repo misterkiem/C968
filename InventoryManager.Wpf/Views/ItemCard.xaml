@@ -1,0 +1,111 @@
+﻿<UserControl x:Class="InventoryManager.Wpf.Views.ItemCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:InventoryManager.Wpf.Views"
+             xmlns:vm="clr-namespace:InventoryManager.Wpf.Vms"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance Type=vm:ItemCardVm}"
+             x:Name="ItemCardControl">
+    <Grid x:Name="CardGrid"
+          Background="#f0f0f0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".5*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1"
+                    Margin="0, 0, 10, 0"
+                    Content="Search"
+                    Command="{Binding SearchCommand}" />
+            <TextBox Grid.Column="2"
+                     VerticalContentAlignment="Center"
+                     Width="Auto"
+                     Text="{Binding SearchText}" />
+        </Grid>
+        <Label Grid.Row="1"
+               d:Content="Placeholder"
+               Content="{Binding CardTitle}"/>
+
+        <DataGrid Grid.Row="2"
+                  x:Name="SomeGrid"
+                  ItemsSource="{Binding Items}"
+                  BorderBrush="Black"
+                  Background="Gray"
+                  AutoGenerateColumns="False"
+                  Margin="5"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  CanUserReorderColumns="False"
+                  CanUserResizeRows="False"
+                  CanUserResizeColumns="False"
+                  IsReadOnly="True">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="HorizontalContentAlignment"
+                            Value="Center" />
+                </Style>
+                <Style x:Key="CellStyle" TargetType="TextBlock">
+                    <Setter Property="HorizontalAlignment"
+                            Value="Center" />
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn d:Header="Placeholder ID"
+                                        Width="70">
+                    <DataGridTemplateColumn.Header>
+                        <TextBlock Text="{Binding DataContext.IdHeader,
+                            RelativeSource={RelativeSource AncestorType=DataGrid}}" />
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Id}" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Name"
+                                    Width="3*"
+                                    ElementStyle="{StaticResource CellStyle}"
+                                    Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Inventory"
+                                    MinWidth="75"
+                                    Width="*"
+                                    ElementStyle="{StaticResource CellStyle}"
+                                    Binding="{Binding InStock}" />
+                <DataGridTextColumn Header="Price"
+                                    MinWidth="50"
+                                    Width="*"
+                                    ElementStyle="{StaticResource CellStyle}"
+                                    Binding="{Binding Price}" />
+                <DataGridTextColumn Header="Min"
+                                    MinWidth="50"
+                                    Width="*"
+                                    ElementStyle="{StaticResource CellStyle}"
+                                    Binding="{Binding Min}" />
+                <DataGridTextColumn Header="Max"
+                                    MinWidth="50"
+                                    Width="*"
+                                    ElementStyle="{StaticResource CellStyle}"
+                                    Binding="{Binding Max}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Height="Auto">
+            <Button Content="Add" />
+            <Button Content="Modify" />
+            <Button Content="Delete" />
+        </StackPanel>
+    </Grid>
+</UserControl>

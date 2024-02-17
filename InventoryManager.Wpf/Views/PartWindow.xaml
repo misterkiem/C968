@@ -1,0 +1,141 @@
+﻿<Window x:Class="InventoryManager.Wpf.Views.PartCard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:InventoryManager.Wpf.Views"
+        xmlns:vm="clr-namespace:InventoryManager.Wpf.Vms"
+        mc:Ignorable="d"
+        Height="450"
+        Width="450"
+        Background="#f0f0f0"
+        ResizeMode="NoResize"
+        Title="Part"
+        d:DataContext="{d:DesignInstance Type=vm:PartWindowVm}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal"
+                    VerticalAlignment="Center">
+            <StackPanel.Resources>
+                <Style TargetType="RadioButton">
+                    <Setter Property="VerticalAlignment"
+                            Value="Center" />
+                    <Setter Property="Margin"
+                            Value="40,0,0,0" />
+                    <Setter Property="FontSize"
+                            Value="16" />
+                    <Setter Property="GroupName"
+                            Value="PartType" />
+                </Style>
+            </StackPanel.Resources>
+            <Label Content="Modify Part"
+                   FontSize="20"
+                   FontWeight="Bold" />
+            <RadioButton Content="In-House"
+                         IsChecked="{Binding IsInHouse}" />
+            <RadioButton Content="Outsourced" />
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="HorizontalAlignment"
+                            Value="Right" />
+                    <Setter Property="VerticalAlignment"
+                            Value="Center" />
+                    <Setter Property="FontSize"
+                            Value="16" />
+                    <Setter Property="Margin"
+                            Value="0,0,20,0" />
+                </Style>
+                <Style TargetType="TextBlock"
+                       x:Key="PartTypeStyle"
+                       BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Setter Property="Text"
+                            Value="Machine ID" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsInHouse}"
+                                     Value="false">
+                            <Setter Property="Text"
+                                    Value="Company Name" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="VerticalContentAlignment"
+                            Value="Center" />
+                    <Setter Property="HorizontalContentAlignment"
+                            Value="Right" />
+                    <Setter Property="Padding"
+                            Value="5,0" />
+                    <Setter Property="Margin"
+                            Value="0,10" />
+                </Style>
+            </Grid.Resources>
+            <TextBlock Text="ID" />
+            <TextBox Grid.Column="1"
+                     IsEnabled="False" Text="{Binding Id}"/>
+            <TextBlock Text="Name"
+                       Grid.Row="1" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="1"
+                     Text="{Binding Name}" />
+            <TextBlock Text="Inventory"
+                       Grid.Row="2" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="2"
+                     Text="{Binding InStock}" />
+            <TextBlock Text="Price / Cost"
+                       Grid.Row="3" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="3"
+                     Text="{Binding Price}" />
+            <TextBlock Text="Max"
+                       Grid.Row="4" />
+            <Grid Grid.Row="4"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width=".5*" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding Max}" />
+                <TextBlock Grid.Column="1"
+                           Text="Min" />
+                <TextBox Grid.Column="2"
+                         Margin="0,10,10,10"
+                         Text="{Binding Min}" />
+            </Grid>
+            <TextBlock Style="{StaticResource PartTypeStyle}"
+                       Grid.Row="5" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="5" />
+        </Grid>
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <StackPanel.Resources>
+            </StackPanel.Resources>
+            <Button Content="Save" />
+            <Button Content="Cancel" />
+            <Rectangle Width="25" />
+        </StackPanel>
+    </Grid>
+</Window>
