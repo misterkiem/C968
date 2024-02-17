@@ -7,11 +7,11 @@ namespace InventoryManager.Wpf.Views
     /// <summary>
     /// Interaction logic for PartCard.xaml
     /// </summary>
-    public partial class PartCard : Window
+    public partial class PartWindow : Window
     {
-        public PartCard()
+        public PartWindow(PartWindowVm vm)
         {
-            DataContext = new PartWindowVm(SampleData.SampleInventory.GetNextPartId());
+            DataContext = vm;
             InitializeComponent();
         }
     }

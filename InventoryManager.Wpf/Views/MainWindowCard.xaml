@@ -31,8 +31,8 @@
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     Height="Auto">
-            <Button Content="Add" />
-            <Button Content="Modify" />
+            <Button Content="Add" Command="{Binding OpenAddWindowCommand}"/>
+            <Button Content="Modify" Command="{Binding OpenModifyWindowCommand}"/>
             <Button Content="Delete" Command="{Binding DeleteItemCommand}"/>
         </StackPanel>
     </Grid>

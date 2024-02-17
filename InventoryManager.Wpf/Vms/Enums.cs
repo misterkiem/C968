@@ -8,9 +8,13 @@ namespace InventoryManager.Wpf.Vms
 {
     public enum WindowType
     {
-        AddPart,
-        ModifyPart,
-        AddProduct,
-        ModifyProduct
+        AddWindow,
+        ModifyWindow
+    }
+
+    public enum InventoryItemType
+    {
+        Product,
+        Part
     }
 }

@@ -1,5 +1,8 @@
 ﻿using InventoryModels;
 using System.Windows;
+using CommunityToolkit.Mvvm.Messaging;
+using InventoryManager.Wpf.Vms;
+using InventoryManager.Wpf.Messages;
 
 namespace InventoryManager.Wpf.Views;
 
@@ -12,7 +15,36 @@ public partial class MainWindow : Window
 
     public MainWindow()
     {
-        DataContext = new Vms.MainWindowVm(inventory);
+        WeakReferenceMessenger.Default.Register<OpenWindowMessage>(this, OnOpenWindowMessage);
+        DataContext = new MainWindowVm(inventory);
         InitializeComponent();
+    }
+
+    private void OnOpenWindowMessage(object recipient, OpenWindowMessage message)
+    {
+        switch (message.ItemType)
+        {
+            case InventoryItemType.Part:
+                OpenPartsWindow(message);
+                break;
+            case InventoryItemType.Product:
+                OpenProductsWindow(message);
+                break;
+            default:
+                break;
+        }
+    }
+
+    void OpenPartsWindow(OpenWindowMessage message)
+    {
+        PartWindowVm vm = new(message, inventory);
+        PartWindow window = new(vm);
+        window.ShowDialog();
+    }
+
+    void OpenProductsWindow(OpenWindowMessage message)
+    {
+        WindowType type = message.WindowType;
+        Product? product = message.SelectedItem as Product;
     }
 }

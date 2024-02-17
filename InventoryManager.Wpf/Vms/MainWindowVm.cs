@@ -20,7 +20,7 @@ public partial class MainWindowVm : ObservableObject
     public MainWindowVm(Inventory inventory)
     {
         Inventory = inventory;
-        PartsCardVm = new(new(Inventory.AllParts)) { CardTitle = "Parts", IdHeader = "Part ID" };
-        ProductsCardVm = new(new(Inventory.Products)) { CardTitle = "Products", IdHeader = "Product ID" };
+        PartsCardVm = new(new(Inventory.AllParts), InventoryItemType.Part);
+        ProductsCardVm = new(new(Inventory.Products), InventoryItemType.Product);
     }
 }
