@@ -35,70 +35,11 @@
         </Grid>
         <Label Grid.Row="1"
                d:Content="Placeholder"
-               Content="{Binding CardTitle}"/>
+               Content="{Binding CardTitle}" />
 
-        <DataGrid Grid.Row="2"
-                  x:Name="SomeGrid"
-                  ItemsSource="{Binding Items}"
-                  BorderBrush="Black"
-                  Background="Gray"
-                  AutoGenerateColumns="False"
-                  Margin="5"
-                  CanUserAddRows="False"
-                  CanUserDeleteRows="False"
-                  CanUserReorderColumns="False"
-                  CanUserResizeRows="False"
-                  CanUserResizeColumns="False"
-                  IsReadOnly="True">
-            <DataGrid.Resources>
-                <Style TargetType="DataGridColumnHeader">
-                    <Setter Property="HorizontalContentAlignment"
-                            Value="Center" />
-                </Style>
-                <Style x:Key="CellStyle" TargetType="TextBlock">
-                    <Setter Property="HorizontalAlignment"
-                            Value="Center" />
-                </Style>
-            </DataGrid.Resources>
-            <DataGrid.Columns>
-                <DataGridTemplateColumn d:Header="Placeholder ID"
-                                        Width="70">
-                    <DataGridTemplateColumn.Header>
-                        <TextBlock Text="{Binding DataContext.IdHeader,
-                            RelativeSource={RelativeSource AncestorType=DataGrid}}" />
-                    </DataGridTemplateColumn.Header>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Id}" HorizontalAlignment="Center"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Name"
-                                    Width="3*"
-                                    ElementStyle="{StaticResource CellStyle}"
-                                    Binding="{Binding Name}" />
-                <DataGridTextColumn Header="Inventory"
-                                    MinWidth="75"
-                                    Width="*"
-                                    ElementStyle="{StaticResource CellStyle}"
-                                    Binding="{Binding InStock}" />
-                <DataGridTextColumn Header="Price"
-                                    MinWidth="50"
-                                    Width="*"
-                                    ElementStyle="{StaticResource CellStyle}"
-                                    Binding="{Binding Price}" />
-                <DataGridTextColumn Header="Min"
-                                    MinWidth="50"
-                                    Width="*"
-                                    ElementStyle="{StaticResource CellStyle}"
-                                    Binding="{Binding Min}" />
-                <DataGridTextColumn Header="Max"
-                                    MinWidth="50"
-                                    Width="*"
-                                    ElementStyle="{StaticResource CellStyle}"
-                                    Binding="{Binding Max}" />
-            </DataGrid.Columns>
-        </DataGrid>
+        <local:InventoryGrid Grid.Row="2"
+                             IdHeader="{Binding IdHeader}"
+                             ItemsSource="{Binding Items}" />
         <StackPanel Grid.Row="3"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
