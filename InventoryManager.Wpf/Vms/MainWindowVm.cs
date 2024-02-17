@@ -5,12 +5,12 @@ namespace InventoryManager.Wpf.Vms;
 public class MainWindowVm
 {
     public Inventory Inventory { get; set; } = SampleData.SampleInventory;
-    public MainWindowCardVm PartsCardVm { get; } = new() { CardTitle = "Parts", IdHeader = "Part ID" };
-    public MainWindowCardVm ProductsCardVm { get; } = new() { CardTitle = "Products", IdHeader = "Product ID" };
+    public MainWindowCardVm PartsCardVm { get; } 
+    public MainWindowCardVm ProductsCardVm { get; }
 
     public MainWindowVm()
     {
-        PartsCardVm.InitItems(Inventory.AllParts);
-        ProductsCardVm.InitItems(Inventory.Products);
+        PartsCardVm = new(Inventory.AllParts) { CardTitle = "Parts", IdHeader = "Part ID" };
+        ProductsCardVm = new(Inventory.Products) { CardTitle = "Products", IdHeader = "Product ID" };
     }
 }

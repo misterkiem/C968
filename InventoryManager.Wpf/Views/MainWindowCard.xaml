@@ -18,25 +18,10 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".5*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="1"
-                    Margin="0, 0, 10, 0"
-                    Content="Search"
-                    Command="{Binding SearchCommand}" />
-            <TextBox Grid.Column="2"
-                     VerticalContentAlignment="Center"
-                     Width="Auto"
-                     Text="{Binding SearchText}" />
-        </Grid>
+        <local:InventorySearchBar DataContext="{Binding SearchBarVm}"/>
         <Label Grid.Row="1"
                d:Content="Placeholder"
                Content="{Binding CardTitle}" />
-
         <local:InventoryGrid Grid.Row="2"
                              IdHeader="{Binding IdHeader}"
                              ItemsSource="{Binding Items}" />
