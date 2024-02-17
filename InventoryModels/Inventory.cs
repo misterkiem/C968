@@ -41,7 +41,10 @@ public class Inventory
     }
     public bool DeletePart(Part part)
     {
+        if (!AllParts.Contains(part)) return false;
         AllParts.Remove(part);
+        var products = Products.Where(product => product.AssociatedParts.Contains(part));
+        foreach(var prod in products) { prod.RemoveAssociatedPart(part); }
         return true;
     }
     public Part? LookupPart(int partID)
