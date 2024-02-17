@@ -2,17 +2,21 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:InventoryManager.Wpf"
-             StartupUri="Views/PartWindow.xaml">
+             StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
         <Style TargetType="Label">
             <Setter Property="FontSize"
-                    Value="20" />
+                    Value="20"/>
+            <Setter Property="FontWeight"
+                    Value="Bold"/>
         </Style>
         <Style TargetType="Button">
             <Setter Property="Padding"
                     Value="10" />
             <Setter Property="Margin"
                     Value="5" />
+            <Setter Property="IsTabStop"
+                    Value="False" />
         </Style>
     </Application.Resources>
 </Application>
