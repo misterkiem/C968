@@ -16,14 +16,18 @@ public partial class InventoryItemCardVm : ObservableObject, IDataErrorInfo
     [ObservableProperty]
     private decimal price;
 
+    [NotifyPropertyChangedFor(nameof(Min))]
+    [NotifyPropertyChangedFor(nameof(Max))]
     [ObservableProperty]
     private int inStock;
 
     [NotifyPropertyChangedFor(nameof(InStock))]
+    [NotifyPropertyChangedFor(nameof(Max))]
     [ObservableProperty]
     private int _min;
 
     [NotifyPropertyChangedFor(nameof(InStock))]
+    [NotifyPropertyChangedFor(nameof(Min))]
     [ObservableProperty]
     private int _max;
     public InventoryItemCardVm(InventoryItem? item) => InitItem(item);
@@ -50,13 +54,27 @@ public partial class InventoryItemCardVm : ObservableObject, IDataErrorInfo
         get
         {
             if (prop == nameof(InStock)) { return CheckStock(); }
-            return null;
+            if (prop == nameof(Min)) { return CheckMin(); }
+            if (prop == nameof(Max)) { return CheckMin(); }
+            return string.Empty;
         }
     }
     private string CheckStock()
     {
-        if (Min <= InStock && InStock <= Max) return null;
+        if (Min <= InStock && InStock <= Max) return string.Empty;
         return $"Inventory out of range ({Min}-{Max})";
+    }
+
+    private string CheckMin()
+    {   if (Min <= InStock && Min <= Max) return string.Empty;
+        return "Min too high";
+
+    }
+
+    private string CheckMax()
+    {
+        if (Max >= InStock && Max >= Min) return string.Empty;
+        return "Max too low";
     }
 
     private void InitItem(InventoryItem? item)
