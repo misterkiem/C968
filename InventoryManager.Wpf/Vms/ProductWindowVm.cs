@@ -7,42 +7,13 @@ using System.Windows.Data;
 
 namespace InventoryManager.Wpf.Vms;
 
-public partial class ProductWindowVm : ObservableObject
+public partial class ProductWindowVm : ErrorNotifyVm
 {
-    WindowType WindowType { get; set; }
-
-    public string WindowTitle => WindowType switch
-    {
-        WindowType.AddWindow => "Add Product",
-        WindowType.ModifyWindow => "Modify Product",
-        _ => string.Empty
-    };
-
-    Inventory _inventory;
-
-    [ObservableProperty]
-    InventoryItemCardVm _cardVm;
-
-    [ObservableProperty]
-    InventorySearchBarVm _searchBarVm;
-    [ObservableProperty]
-    Part? _partToAdd;
-    [ObservableProperty]
-    ListCollectionView _partsView;
-
-    [ObservableProperty]
-    Part? _partToDelete;
-
-    Product _product => (Product)CardVm.Item;
-
-    public ObservableCollection<Part> AssociatedParts { get; }
-
     public ProductWindowVm(OpenWindowMessage message, Inventory inventory)
     {
         _inventory = inventory;
         PartsView = new ListCollectionView(inventory.AllParts);
         SearchBarVm = new(PartsView);
-
 
         var type = message.WindowType;
         WindowType = type;
@@ -58,38 +29,76 @@ public partial class ProductWindowVm : ObservableObject
         AssociatedParts = product.AssociatedParts;
     }
 
-    [RelayCommand]
-    void Save()
+    [ObservableProperty]
+    private InventoryItemCardVm _cardVm;
+
+    private Inventory _inventory;
+
+    [ObservableProperty]
+    private ListCollectionView _partsView;
+
+    [ObservableProperty]
+    private Part? _partToAdd;
+
+    [ObservableProperty]
+    private Part? _partToDelete;
+
+    [ObservableProperty]
+    private InventorySearchBarVm _searchBarVm;
+    public ObservableCollection<Part> AssociatedParts { get; }
+
+    public string WindowTitle => WindowType switch
     {
+        WindowType.AddWindow => "Add Product",
+        WindowType.ModifyWindow => "Modify Product",
+        _ => string.Empty
+    };
+
+    private WindowType WindowType { get; set; }
+    [RelayCommand]
+    private void AddPart()
+    {
+        if (PartToAdd is null) return;
+        AssociatedParts.Add(PartToAdd);
+    }
+
+    [RelayCommand(CanExecute=nameof(HasNoErrors))]
+    private void Save()
+    {
+        Product product;
         switch (WindowType)
         {
             case WindowType.AddWindow:
-                _inventory.AddProduct(_product);
+                product = new(CardVm.GetItem(), AssociatedParts);
+                _inventory.AddProduct(product);
                 break;
+
             case WindowType.ModifyWindow:
-                _inventory.UpdateProduct(_product.Id, _product);
+                product = new(CardVm.GetItem());
+                _inventory.UpdateProduct(product.Id, product);
                 break;
+
             default:
                 break;
         }
         Messenger.Send(new CloseProductWindowMessage());
-
     }
 
     [RelayCommand]
-    void Cancel() { Messenger.Send(new CloseProductWindowMessage()); }
+    private void Cancel()
+    { Messenger.Send(new CloseProductWindowMessage()); }
 
     [RelayCommand]
-    void DeletePart()
+    private void DeletePart()
     {
         if (PartToDelete is null) return;
-        _product.RemoveAssociatedPart(PartToDelete);
+        AssociatedParts.Remove(PartToDelete);
     }
 
-    [RelayCommand]
-    void AddPart()
+    protected override void OnErrorsChanged(object recipient, ErrorsChangedMessage message)
     {
-        if (PartToAdd is null) return;
-        _product.AddAssociatedPart(PartToAdd);
+        base.OnErrorsChanged(recipient, message);
+        SaveCommand.NotifyCanExecuteChanged();
     }
+
 }

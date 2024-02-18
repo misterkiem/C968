@@ -2,19 +2,20 @@
 using InventoryManager.Wpf.Vms;
 using InventoryModels;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace InventoryManager.Wpf.Views
 {
     /// <summary>
     /// Interaction logic for PartCard.xaml
     /// </summary>
-    public partial class PartWindow : Window
+    public partial class PartWindow : ErrorNotifyWindow
     {
-        public PartWindow(PartWindowVm vm)
+        public PartWindow(PartWindowVm vm) : base()
         {
             Messenger.Register<ClosePartWindowMessage>(this, OnClosedMessage);
-            DataContext = vm;
             InitializeComponent();
+            DataContext = vm;
         }
 
         private void OnClosedMessage(object recipient, ClosePartWindowMessage message)

@@ -7,7 +7,7 @@ namespace InventoryManager.Wpf.Views
     /// <summary>
     /// Interaction logic for ProductWindow.xaml
     /// </summary>
-    public partial class ProductWindow : Window
+    public partial class ProductWindow : ErrorNotifyWindow
     {
         public ProductWindow(ProductWindowVm vm)
         {

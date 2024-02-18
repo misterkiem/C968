@@ -3,12 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:InventoryManager.Wpf.Views"
              xmlns:vm="clr-namespace:InventoryManager.Wpf.Vms"
              mc:Ignorable="d"
              d:DesignHeight="290"
              d:DesignWidth="450"
-             d:DataContext="{d:DesignInstance Type=vm:InventoryItemCardVm}">
+             d:DataContext="{d:DesignInstance Type=vm:InventoryItemCardVm}"
+             x:Name="ItemCardControl">
     <Grid Grid.Row="1">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -47,22 +47,26 @@
         <TextBlock Text="ID" />
         <TextBox Grid.Column="1"
                  IsEnabled="False"
-                 Text="{Binding Item.Id}" />
+                 Text="{Binding Id}" />
         <TextBlock Text="Name"
                    Grid.Row="1" />
         <TextBox Grid.Column="1"
                  Grid.Row="1"
-                 Text="{Binding Item.Name}" />
+                 Text="{Binding Name}" />
         <TextBlock Text="Inventory"
                    Grid.Row="2" />
         <TextBox Grid.Column="1"
                  Grid.Row="2"
-                 Text="{Binding Item.InStock}" />
+                 x:Name="InventoryTextBox"
+                 Text="{Binding InStock, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+        </TextBox>
         <TextBlock Text="Price / Cost"
                    Grid.Row="3" />
         <TextBox Grid.Column="1"
                  Grid.Row="3"
-                 Text="{Binding Item.Price}" />
+                 x:Name="PriceTextBox"
+                 Text="{Binding Price, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+
         <TextBlock Text="Max"
                    Grid.Row="4" />
         <Grid Grid.Row="4"
@@ -73,12 +77,14 @@
                 <ColumnDefinition Width=".5*" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <TextBox Text="{Binding Item.Max}" />
+            <TextBox Text="{Binding Max, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                     x:Name="MaxTextBox" />
             <TextBlock Grid.Column="1"
                        Text="Min" />
             <TextBox Grid.Column="2"
                      Margin="0,10,10,10"
-                     Text="{Binding Item.Min}" />
+                     Text="{Binding Min, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                     x:Name="MinTextBox" />
         </Grid>
     </Grid>
 </UserControl>

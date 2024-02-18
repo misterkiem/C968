@@ -2,16 +2,37 @@
 using CommunityToolkit.Mvvm.Input;
 using InventoryManager.Wpf.Messages;
 using InventoryModels;
+using System.ComponentModel;
 
 namespace InventoryManager.Wpf.Vms
 {
-    public partial class PartWindowVm : ObservableObject
+    public partial class PartWindowVm : ErrorNotifyVm
     {
-        Inventory _inventory;
-        public WindowType WindowType { get; set; }
+        private Inventory _inventory;
+
+        public PartWindowVm(OpenWindowMessage message, Inventory inventory) : base()
+        {
+            _inventory = inventory;
+            var type = message.WindowType;
+
+            WindowType = type;
+            if (type == WindowType.AddWindow) { _cardVm = new(inventory.GetNextPartId()); }
+            else { _cardVm = new(message.SelectedItem as Part); }
+        }
 
         [ObservableProperty]
-        InventoryItemCardVm _cardVm;
+        private InventoryItemCardVm _cardVm;
+
+        [ObservableProperty]
+        private string? _companyName;
+
+        [ObservableProperty, NotifyPropertyChangedFor(nameof(IsOutsourced))]
+        private bool _isInHouse = true;
+
+        [ObservableProperty]
+        private int? _machineId;
+
+        public bool IsOutsourced => !IsInHouse;
 
         public string? WindowTitle => WindowType switch
         {
@@ -20,29 +41,10 @@ namespace InventoryManager.Wpf.Vms
             _ => null
         };
 
-        [ObservableProperty, NotifyPropertyChangedFor(nameof(IsOutsourced))]
-        bool _isInHouse = true;
-        public bool IsOutsourced => !IsInHouse;
+        public WindowType WindowType { get; set; }
 
-        [ObservableProperty]
-        int? _machineId;
-
-        [ObservableProperty]
-        string? _companyName;
-
-        public PartWindowVm(OpenWindowMessage message, Inventory inventory)
-        {
-            _inventory = inventory;
-            var type = message.WindowType;
-
-            WindowType = type;
-            if (type == WindowType.AddWindow) { _cardVm = new(inventory.GetNextPartId()); }
-            else { _cardVm = new(message.SelectedItem as Part); }
-
-        }
-
-        [RelayCommand]
-        void Save()
+        [RelayCommand(CanExecute = nameof(HasNoErrors))]
+        private void Save()
         {
             if (WindowType == WindowType.AddWindow) AddPart();
             else ReplacePart();
@@ -50,31 +52,35 @@ namespace InventoryManager.Wpf.Vms
         }
 
         [RelayCommand]
-        static void Cancel()
+        private static void Cancel()
         {
             Messenger.Send(new ClosePartWindowMessage());
         }
 
-
-        void AddPart()
+        private void AddPart()
         {
             var part = GetPart();
             _inventory.AllParts.Add(part);
         }
 
-        void ReplacePart()
+        private Part GetPart()
+        {
+            Part part;
+            if (IsInHouse) { part = new Inhouse(CardVm.GetItem()) { MachineID = MachineId ?? 0 }; }
+            else { part = new Outsourced(CardVm.GetItem()); }
+            return part;
+        }
+
+        private void ReplacePart()
         {
             var part = GetPart();
             _inventory.UpdatePart(part.Id, part);
-
         }
 
-        Part GetPart()
+        protected override void OnErrorsChanged(object recipient, ErrorsChangedMessage message)
         {
-            Part part;
-            if (IsInHouse) { part = new Inhouse(CardVm.Item); }
-            else { part = new Outsourced(CardVm.Item); }
-            return part;
+            base.OnErrorsChanged(recipient, message);
+            SaveCommand.NotifyCanExecuteChanged();
         }
     }
 }

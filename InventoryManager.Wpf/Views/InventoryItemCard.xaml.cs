@@ -1,6 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using InventoryManager.Wpf.Vms;
+﻿using System.Windows.Controls;
 
 namespace InventoryManager.Wpf.Views
 {

@@ -1,28 +1,72 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using InventoryManager.Wpf.Messages;
 using InventoryModels;
+using System.ComponentModel;
 
 namespace InventoryManager.Wpf.Vms;
 
-public partial class InventoryItemCardVm : ObservableObject
+public partial class InventoryItemCardVm : ObservableObject, IDataErrorInfo
 {
     [ObservableProperty]
-    InventoryItem _item;
+    private int _id;
 
-    public InventoryItemCardVm(Product item)
+    [ObservableProperty]
+    private string _name = string.Empty;
+
+    [ObservableProperty]
+    private decimal price;
+
+    [ObservableProperty]
+    private int inStock;
+
+    [NotifyPropertyChangedFor(nameof(InStock))]
+    [ObservableProperty]
+    private int _min;
+
+    [NotifyPropertyChangedFor(nameof(InStock))]
+    [ObservableProperty]
+    private int _max;
+    public InventoryItemCardVm(InventoryItem? item) => InitItem(item);
+
+    public InventoryItemCardVm(int id) => Id = id;
+
+    public InventoryItem GetItem()
     {
-        Item = item;
+        return new InventoryItem()
+        {
+            Id = Id,
+            Name = Name,
+            Price = Price,
+            InStock = InStock,
+            Min = Min,
+            Max = Max
+        };
     }
 
-    public InventoryItemCardVm(InventoryItem? item)
+    public string Error => string.Empty;
+
+    public string this[string prop]
     {
-        if (item is null) Item = new();
-        else Item = new(item);
+        get
+        {
+            if (prop == nameof(InStock)) { return CheckStock(); }
+            return null;
+        }
+    }
+    private string CheckStock()
+    {
+        if (Min <= InStock && InStock <= Max) return null;
+        return $"Inventory out of range ({Min}-{Max})";
     }
 
-    public InventoryItemCardVm(int id)
+    private void InitItem(InventoryItem? item)
     {
-        Item = new() { Id = id };
+        if (item is null) return;
+        Id = item.Id;
+        Name = item.Name;
+        Price = item.Price;
+        InStock = item.InStock;
+        Min = item.Min;
+        Max = item.Max;
     }
-
-
 }

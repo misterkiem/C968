@@ -1,4 +1,4 @@
-﻿<Window x:Class="InventoryManager.Wpf.Views.PartWindow"
+﻿<local:ErrorNotifyWindow x:Class="InventoryManager.Wpf.Views.PartWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -97,7 +97,10 @@
                         </DataTemplate.Resources>
                         <UniformGrid Rows="1">
                             <TextBlock Text="Machine ID" />
-                            <TextBox Text="{Binding DataContext.MachineId, RelativeSource={RelativeSource AncestorType=ContentControl}}" />
+                            <TextBox Text="{Binding DataContext.MachineId,
+                                RelativeSource={RelativeSource AncestorType=ContentControl},
+                                ValidatesOnDataErrors=True, 
+                                NotifyOnValidationError=True}" />
                         </UniformGrid>
                     </DataTemplate>
                     <DataTemplate x:Key="OutsourcedTemplate">
@@ -136,4 +139,4 @@
             <Rectangle Width="25" />
         </StackPanel>
     </Grid>
-</Window>
+</local:ErrorNotifyWindow>
