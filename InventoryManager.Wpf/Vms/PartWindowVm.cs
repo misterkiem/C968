@@ -17,7 +17,19 @@ namespace InventoryManager.Wpf.Vms
 
             WindowType = type;
             if (type == WindowType.AddWindow) { _cardVm = new(inventory.GetNextPartId()); }
-            else { _cardVm = new(message.SelectedItem as Part); }
+            else
+            {
+                var part = message.SelectedItem as Part;
+                if (part is Inhouse inhouse) { MachineId = inhouse.MachineID; }
+
+                if (part is Outsourced outsourced)
+                {
+                    CompanyName = outsourced.CompanyName;
+                    IsInHouse = false;
+                }
+
+                _cardVm = new(part);
+            }
         }
 
         [ObservableProperty]
@@ -66,8 +78,14 @@ namespace InventoryManager.Wpf.Vms
         private Part GetPart()
         {
             Part part;
-            if (IsInHouse) { part = new Inhouse(CardVm.GetItem()) { MachineID = MachineId ?? 0 }; }
-            else { part = new Outsourced(CardVm.GetItem()); }
+            if (IsInHouse)
+            {
+                part = new Inhouse(CardVm.GetItem()) { MachineID = MachineId ?? 0 };
+            }
+            else
+            {
+                part = new Outsourced(CardVm.GetItem()) { CompanyName = CompanyName ?? string.Empty };
+            }
             return part;
         }
 
