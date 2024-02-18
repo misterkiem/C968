@@ -10,8 +10,8 @@ public partial class MainWindowVm : ObservableObject
 {
     IDialogService dialogService = new DialogService();
     public Inventory Inventory { get; set; }
-    public MainWindowPartCardVm PartsCardVm { get; }
-    public MainWindowProductCardVm ProductsCardVm { get; }
+    public MainWindowCardVm PartsCardVm { get; } 
+    public MainWindowCardVm ProductsCardVm { get; }
 
     [ObservableProperty]
     Part? _selectedPart;
@@ -22,7 +22,7 @@ public partial class MainWindowVm : ObservableObject
     public MainWindowVm(Inventory inventory)
     {
         Inventory = inventory;
-        PartsCardVm = new(dialogService, Inventory);
-        ProductsCardVm = new(dialogService, new ListCollectionView(Inventory.Products));
+        PartsCardVm = new(new(Inventory.AllParts), InventoryItemType.Part, dialogService);
+        ProductsCardVm = new(new(Inventory.Products), InventoryItemType.Product, dialogService);
     }
 }

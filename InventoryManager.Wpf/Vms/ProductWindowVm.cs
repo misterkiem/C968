@@ -65,16 +65,14 @@ public partial class ProductWindowVm : ErrorNotifyVm
     [RelayCommand(CanExecute=nameof(HasNoErrors))]
     private void Save()
     {
-        Product product;
+        Product product = new(CardVm.GetItem(), AssociatedParts);
         switch (WindowType)
         {
             case WindowType.AddWindow:
-                product = new(CardVm.GetItem(), AssociatedParts);
                 _inventory.AddProduct(product);
                 break;
 
             case WindowType.ModifyWindow:
-                product = new(CardVm.GetItem());
                 _inventory.UpdateProduct(product.Id, product);
                 break;
 

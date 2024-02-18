@@ -11,13 +11,14 @@ namespace InventoryManager.Wpf.Messages
 {
     public partial class OpenWindowMessage
     {
+        public object Sender { get; set; }
         public WindowType WindowType { get; set; }
-        public InventoryItemType ItemType { get; set; }
         public InventoryItem? SelectedItem { get; } = null;
-        public OpenWindowMessage(WindowType windowType, InventoryItemType itemType, InventoryItem? selectedItem)
+
+        public OpenWindowMessage(WindowType windowType, object sender, InventoryItem? selectedItem)
         {
             WindowType = windowType;
-            ItemType = itemType;
+            Sender = sender;
             SelectedItem = selectedItem;
         }
     }

@@ -1,74 +1,66 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using InventoryManager.Wpf.Messages;
+using InventoryManager.Wpf.Services;
 using InventoryModels;
 using System.Windows.Data;
 
 namespace InventoryManager.Wpf.Vms
 {
-    public partial class MainWindowCardVm : ObservableObject
+    public abstract partial class MainWindowCardVm : ObservableObject
     {
-        public InventoryItemType ItemType { get; set; }
+        protected IDialogService DialogService { get; set; }
+        public abstract string DisplayName { get; }
+        public string CardTitle => DisplayName + "s";
 
-        public string CardTitle => GetCardTitle();
-
-        public string IdHeader => GetIdHeader();
+        public string IdHeader => DisplayName + "ID";
+        protected string DeleteConfirmMessage => $"Are you sure you want to delete this {DisplayName}?";
 
         [ObservableProperty]
-        ListCollectionView _itemsView;
+        ListCollectionView? _itemsView;
 
         [ObservableProperty]
         InventoryItem? _selectedItem;
 
         [ObservableProperty]
-        InventorySearchBarVm _searchBarVm;
+        InventorySearchBarVm? _searchBarVm;
 
-        public MainWindowCardVm(ListCollectionView itemsView, InventoryItemType itemType)
+        public MainWindowCardVm(IDialogService dialogService)
         {
-            SearchBarVm = new(itemsView);
-            ItemsView = itemsView;
-            ItemType = itemType;
+            DialogService = dialogService;
         }
 
         [RelayCommand]
-        public void DeleteItem()
+        public virtual void DeleteItem()
         {
-            if (SelectedItem is null) return;
-            if (ItemsView.Contains(SelectedItem)) { ItemsView.Remove(SelectedItem); }
+            if (!ConfirmDelete()) return;
+            ItemsView!.Remove(SelectedItem!);
         }
 
         [RelayCommand]
         public void OpenAddWindow()
         {
-            var message = new OpenWindowMessage(WindowType.AddWindow, ItemType, SelectedItem);
+            var message = new OpenWindowMessage(WindowType.AddWindow, this, SelectedItem);
             Messenger.Send(message);
+        }
+
+        partial void OnItemsViewChanged(ListCollectionView? value)
+        {
+            if (value is null) return;
+            SearchBarVm = new(value);
         }
 
         [RelayCommand]
         void OpenModifyWindow()
         {
-            var message = new OpenWindowMessage(WindowType.ModifyWindow, ItemType, SelectedItem);
+            var message = new OpenWindowMessage(WindowType.ModifyWindow, this, SelectedItem);
             Messenger.Send(message);
         }
-
-        string GetCardTitle()
+        protected bool ConfirmDelete()
         {
-            return ItemType switch
-            {
-                InventoryItemType.Part => "Parts",
-                InventoryItemType.Product => "Products",
-                _ => throw new NotImplementedException()
-            };
-        }
-
-        string GetIdHeader()
-        {
-            return ItemType switch
-            {
-                InventoryItemType.Part => "Part ID",
-                InventoryItemType.Product => "Product ID",
-                _ => throw new NotImplementedException()
-            };
+            if (SelectedItem is null) return false;
+            if (!DialogService.DisplayConfirmMessage(DeleteConfirmMessage, "Confirm Delete")) return false;
+            return true;
         }
     }
 }

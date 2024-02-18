@@ -21,17 +21,9 @@ public partial class MainWindow : Window
 
     private void OnOpenWindowMessage(object recipient, OpenWindowMessage message)
     {
-        switch (message.ItemType)
-        {
-            case InventoryItemType.Part:
-                OpenPartsWindow(message);
-                break;
-            case InventoryItemType.Product:
-                OpenProductsWindow(message);
-                break;
-            default:
-                break;
-        }
+        var sender = message.Sender;
+        if (sender is MainWindowPartCardVm) OpenPartsWindow(message);
+        if (sender is MainWindowProductCardVm) OpenProductsWindow(message);
     }
 
     void OpenPartsWindow(OpenWindowMessage message)
