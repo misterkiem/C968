@@ -15,16 +15,17 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="1"
-                Margin="0, 0, 10, 0"
+        <Label Grid.Column="1"
+                Margin="0, 0, 5, 0"
                 Height="Auto"
                 Padding="5"
-                Content="Search"
-                Command="{Binding SearchCommand}" />
+                FontSize="14"
+               FontWeight="Normal"
+                Content="Search"/>
         <TextBox Grid.Column="2"
                  VerticalContentAlignment="Center"
                  Height="Auto"
                  Width="Auto"
-                 Text="{Binding SearchText}" />
+                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 </UserControl>

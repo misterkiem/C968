@@ -16,16 +16,12 @@ public partial class InventorySearchBarVm : ObservableObject
     [ObservableProperty]
     string searchText = string.Empty;
 
-    [RelayCommand]
-    void Search()
-    {
-        itemFilter = SearchText;
-        Items?.Refresh();
-    }
+    partial void OnSearchTextChanged(string? oldValue, string newValue) => Items?.Refresh();
+
 
     bool CheckFilter(InventoryItem item)
     {
-        return item.Name.ToLower().Contains(itemFilter.ToLower());
+        return item.Name.ToLower().Contains(searchText.ToLower());
     }
 
     public InventorySearchBarVm(ICollectionView items)
