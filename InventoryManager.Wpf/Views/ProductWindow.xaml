@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:InventoryManager.Wpf.Views"
         xmlns:vm="clr-namespace:InventoryManager.Wpf.Vms"
         mc:Ignorable="d"
+        Title="Products Manager"
         Height="750"
         Width="1260"
         ResizeMode="NoResize"

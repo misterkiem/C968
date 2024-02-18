@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:InventoryManager.Wpf.Views"
         xmlns:vm="clr-namespace:InventoryManager.Wpf.Vms"
         mc:Ignorable="d"
-        Title="Main Screen"
+        Title="Inventory Management System"
         MinHeight="300"
         MinWidth="800"
         Height="600"
@@ -41,7 +41,8 @@
                 <Button Grid.Row="3" Grid.ColumnSpan="2"
                         Margin="0, 30, 0 ,0"
                         HorizontalAlignment="Right"
-                        Content="Exit" />
+                        Content="Exit"
+                        Command="{Binding ExitCommand}"/>
             </Grid>
         </Border>
     </Grid>

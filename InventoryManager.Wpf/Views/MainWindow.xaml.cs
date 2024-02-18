@@ -15,9 +15,12 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         Messenger.Register<OpenWindowMessage>(this, OnOpenWindowMessage);
+        Messenger.Register<CloseMainWindowMessage>(this, OnCloseWindowMessage);
         DataContext = new MainWindowVm(inventory);
         InitializeComponent();
     }
+
+    private void OnCloseWindowMessage(object recipient, CloseMainWindowMessage message) { Close(); }
 
     private void OnOpenWindowMessage(object recipient, OpenWindowMessage message)
     {

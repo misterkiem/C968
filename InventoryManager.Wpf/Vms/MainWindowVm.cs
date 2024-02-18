@@ -1,7 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using InventoryManager.Wpf.Messages;
 using InventoryManager.Wpf.Services;
 using InventoryModels;
-using System.ComponentModel;
 using System.Windows.Data;
 
 namespace InventoryManager.Wpf.Vms;
@@ -18,11 +19,16 @@ public partial class MainWindowVm : ObservableObject
 
     [ObservableProperty]
     Product? _selectedProduct;
-
     public MainWindowVm(Inventory inventory)
     {
         Inventory = inventory;
         PartsCardVm = new(dialogService, Inventory);
         ProductsCardVm = new(dialogService, new ListCollectionView(Inventory.Products));
+    }
+
+    [RelayCommand]
+    void Exit()
+    {
+        Messenger.Send(new CloseMainWindowMessage());
     }
 }

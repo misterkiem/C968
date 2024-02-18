@@ -8,4 +8,5 @@ namespace InventoryManager.Wpf.Messages
 {
     public class ClosePartWindowMessage { }
     public class CloseProductWindowMessage { }
+    public class CloseMainWindowMessage { }
 }

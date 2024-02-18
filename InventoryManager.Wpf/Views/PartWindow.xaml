@@ -10,7 +10,7 @@
         Width="450"
         Background="#f0f0f0"
         ResizeMode="NoResize"
-        Title="Part"
+        Title="Parts Manager"
         d:DataContext="{d:DesignInstance Type=vm:PartWindowVm}">
     <Grid>
         <Grid.RowDefinitions>
