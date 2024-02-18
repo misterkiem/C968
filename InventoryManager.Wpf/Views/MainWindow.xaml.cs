@@ -1,6 +1,5 @@
 ﻿using InventoryModels;
 using System.Windows;
-using CommunityToolkit.Mvvm.Messaging;
 using InventoryManager.Wpf.Vms;
 using InventoryManager.Wpf.Messages;
 
@@ -15,7 +14,7 @@ public partial class MainWindow : Window
 
     public MainWindow()
     {
-        WeakReferenceMessenger.Default.Register<OpenWindowMessage>(this, OnOpenWindowMessage);
+        Messenger.Register<OpenWindowMessage>(this, OnOpenWindowMessage);
         DataContext = new MainWindowVm(inventory);
         InitializeComponent();
     }

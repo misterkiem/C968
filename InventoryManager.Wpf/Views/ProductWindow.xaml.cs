@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using InventoryManager.Wpf.Messages;
+using System.Windows;
 
 namespace InventoryManager.Wpf.Views
 {
@@ -9,7 +10,14 @@ namespace InventoryManager.Wpf.Views
     {
         public ProductWindow()
         {
+            Messenger.Register<CloseProductWindowMessage>(this, OnCloseProductWindowMessage);
             InitializeComponent();
+        }
+
+        private void OnCloseProductWindowMessage(object recipient, CloseProductWindowMessage message)
+        {
+            Messenger.Unregister<CloseProductWindowMessage>(this);
+            Close();
         }
     }
 }

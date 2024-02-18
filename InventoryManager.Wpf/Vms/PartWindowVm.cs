@@ -7,6 +7,7 @@ namespace InventoryManager.Wpf.Vms
 {
     public partial class PartWindowVm : ObservableObject
     {
+        Inventory _inventory;
         public WindowType WindowType { get; set; }
 
         [ObservableProperty]
@@ -31,42 +32,40 @@ namespace InventoryManager.Wpf.Vms
 
         public PartWindowVm(OpenWindowMessage message, Inventory inventory)
         {
+            _inventory = inventory;
             var type = message.WindowType;
-            Part? part = message.SelectedItem as Part;
 
-            WindowType = type; 
-            if (type == WindowType.AddWindow)
-            {
-                _cardVm = new(inventory.GetNextProductId());
-            }
-            else
-            {
-                if (part is null) return;
-                _cardVm = new(part);
-            }
+            WindowType = type;
+            if (type == WindowType.AddWindow) { _cardVm = new(inventory.GetNextPartId()); }
+            else { _cardVm = new(message.SelectedItem as Part); }
 
         }
 
         [RelayCommand]
         void Save()
         {
-
+            if (WindowType == WindowType.AddWindow) AddPart();
+            else ReplacePart();
+            Messenger.Send(new ClosePartWindowMessage());
         }
 
         [RelayCommand]
-        void Cancel()
+        static void Cancel()
         {
-
+            Messenger.Send(new ClosePartWindowMessage());
         }
 
 
         void AddPart()
         {
-            Part part;
+            var part = GetPart();
+            _inventory.AllParts.Add(part);
         }
 
         void ReplacePart()
         {
+            var part = GetPart();
+            _inventory.UpdatePart(part.Id, part);
 
         }
 

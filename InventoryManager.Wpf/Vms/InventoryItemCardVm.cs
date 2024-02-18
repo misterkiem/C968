@@ -8,9 +8,10 @@ public partial class InventoryItemCardVm : ObservableObject
     [ObservableProperty]
     InventoryItem _item;
 
-    public InventoryItemCardVm(InventoryItem item)
+    public InventoryItemCardVm(InventoryItem? item)
     {
-        Item = new(item);
+        if (item is null) Item = new();
+        else Item = new(item);
     }
 
     public InventoryItemCardVm(int id)

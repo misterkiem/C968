@@ -1,15 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using InventoryManager.Wpf.Messages;
 using InventoryModels;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace InventoryManager.Wpf.Vms
@@ -49,14 +41,14 @@ namespace InventoryManager.Wpf.Vms
         public void OpenAddWindow()
         {
             var message = new OpenWindowMessage(WindowType.AddWindow, ItemType, SelectedItem);
-            WeakReferenceMessenger.Default.Send(message);
+            Messenger.Send(message);
         }
 
         [RelayCommand]
         void OpenModifyWindow()
         {
             var message = new OpenWindowMessage(WindowType.ModifyWindow, ItemType, SelectedItem);
-            WeakReferenceMessenger.Default.Send(message);
+            Messenger.Send(message);
         }
 
         string GetCardTitle()

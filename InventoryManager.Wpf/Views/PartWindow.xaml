@@ -131,8 +131,8 @@
                     HorizontalAlignment="Right">
             <StackPanel.Resources>
             </StackPanel.Resources>
-            <Button Content="Save" />
-            <Button Content="Cancel" />
+            <Button Content="Save" Command="{Binding SaveCommand}"/>
+            <Button Content="Cancel" Command="{Binding CancelCommand}"/>
             <Rectangle Width="25" />
         </StackPanel>
     </Grid>
