@@ -1,4 +1,5 @@
 ﻿using InventoryManager.Wpf.Messages;
+using InventoryManager.Wpf.Vms;
 using System.Windows;
 
 namespace InventoryManager.Wpf.Views
@@ -8,8 +9,9 @@ namespace InventoryManager.Wpf.Views
     /// </summary>
     public partial class ProductWindow : Window
     {
-        public ProductWindow()
+        public ProductWindow(ProductWindowVm vm)
         {
+            DataContext = vm;
             Messenger.Register<CloseProductWindowMessage>(this, OnCloseProductWindowMessage);
             InitializeComponent();
         }

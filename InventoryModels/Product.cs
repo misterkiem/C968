@@ -9,6 +9,7 @@ public class Product : InventoryItem
 
     public void AddAssociatedPart(Part part)
     {
+        if (LookupAssociatedPart(part.Id) is not null) return;
         AssociatedParts.Add(part);
     }
     public void RemoveAssociatedPart(Part part)

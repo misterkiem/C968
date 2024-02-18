@@ -43,7 +43,8 @@ public partial class MainWindow : Window
 
     void OpenProductsWindow(OpenWindowMessage message)
     {
-        WindowType type = message.WindowType;
-        Product? product = message.SelectedItem as Product;
+        ProductWindowVm vm = new(message, inventory);
+        ProductWindow window = new(vm);
+        window.ShowDialog();
     }
 }

@@ -4,10 +4,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:InventoryManager.Wpf.Views"
+        xmlns:vm="clr-namespace:InventoryManager.Wpf.Vms"
         mc:Ignorable="d"
         Height="750"
         Width="1260"
-        ResizeMode="NoResize" >
+        ResizeMode="NoResize"
+        d:DataContext="{d:DesignInstance Type=vm:ProductWindowVm}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -18,11 +20,13 @@
             <ColumnDefinition Width="450" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Label Content="Add Product"
+        <Label d:Content="Placeholder"
+               Content="{Binding WindowTitle}"
                Margin="20,5" />
         <local:InventoryItemCard Grid.Row="1"
                                  Grid.RowSpan="2"
-                                 Margin="0,200" />
+                                 Margin="0,200"
+                                 DataContext="{Binding CardVm}" />
         <Grid Grid.Row="1"
               Grid.Column="1">
             <Grid.RowDefinitions>
@@ -39,32 +43,41 @@
             </Grid.Resources>
             <DockPanel>
                 <local:InventorySearchBar DockPanel.Dock="Top"
-                                          Margin="5" />
+                                          Margin="5"
+                                          DataContext="{Binding SearchBarVm}"/>
                 <Label DockPanel.Dock="Top"
                        Content="All Candidate parts" />
                 <Button Content="Add"
+                        Command="{Binding AddPartCommand}"
                         DockPanel.Dock="Bottom"
                         HorizontalAlignment="Right"
                         Margin="0,0,30,0" />
-                <local:InventoryGrid Margin="5" />
+                <local:InventoryGrid Margin="5"
+                                     ItemsSource="{Binding PartsView}"
+                                     SelectedItem="{Binding PartToAdd, Mode=OneWayToSource}" />
             </DockPanel>
-
             <DockPanel Grid.Row="1">
-                <Label DockPanel.Dock="Top" Content="Product Associated Parts"/>
+                <Label DockPanel.Dock="Top"
+                       Content="Product Associated Parts" />
 
                 <Button Content="Delete"
+                        Command="{Binding DeletePartCommand}"
                         DockPanel.Dock="Bottom"
                         HorizontalAlignment="Right"
                         Margin="0,0,30,0" />
-                <local:InventoryGrid Margin="5" />
+                <local:InventoryGrid Margin="5"
+                                     ItemsSource="{Binding AssociatedParts}"
+                                     SelectedItem="{Binding PartToDelete, Mode=OneWayToSource}" />
             </DockPanel>
         </Grid>
         <StackPanel Grid.Row="2"
                     Grid.Column="1"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">
-            <Button Content="Save" />
-            <Button Content="Delete" />
+            <Button Content="Save"
+                    Command="{Binding SaveCommand}" />
+            <Button Content="Cancel"
+                    Command="{Binding CancelCommand}" />
         </StackPanel>
     </Grid>
 </Window>
