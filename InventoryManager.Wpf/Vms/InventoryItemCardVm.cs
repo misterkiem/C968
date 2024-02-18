@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using InventoryManager.Wpf.Messages;
-using InventoryModels;
+using InventoryManager.Models;
 using System.ComponentModel;
 
 namespace InventoryManager.Wpf.Vms;

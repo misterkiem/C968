@@ -1,4 +1,4 @@
-﻿using InventoryModels;
+﻿using InventoryManager.Models;
 
 namespace InventoryManager.Wpf.Messages;
 

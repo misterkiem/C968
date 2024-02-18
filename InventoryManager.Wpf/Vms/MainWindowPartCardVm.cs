@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using InventoryManager.Wpf.Services;
-using InventoryModels;
+using InventoryManager.Models;
 using System.Windows.Data;
 
 namespace InventoryManager.Wpf.Vms;

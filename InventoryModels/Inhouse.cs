@@ -1,4 +1,4 @@
-﻿namespace InventoryModels;
+﻿namespace InventoryManager.Models;
 
 public class Inhouse : Part
 { 

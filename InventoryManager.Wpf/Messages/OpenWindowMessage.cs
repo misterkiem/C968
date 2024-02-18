@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
 using InventoryManager.Wpf.Vms;
-using InventoryModels;
+using InventoryManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

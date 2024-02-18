@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace InventoryModels;
+namespace InventoryManager.Models;
 
 public class Product : InventoryItem
 {

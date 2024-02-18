@@ -1,6 +1,6 @@
 ﻿using InventoryManager.Wpf.Messages;
 using InventoryManager.Wpf.Vms;
-using InventoryModels;
+using InventoryManager.Models;
 using System.Windows;
 using System.Windows.Controls;
 
