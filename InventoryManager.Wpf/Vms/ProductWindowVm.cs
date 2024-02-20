@@ -4,6 +4,7 @@ using InventoryManager.Wpf.Messages;
 using InventoryManager.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Data;
+using System.Collections;
 
 namespace InventoryManager.Wpf.Vms;
 
@@ -13,7 +14,7 @@ public partial class ProductWindowVm : ErrorNotifyVm
     {
         _inventory = inventory;
         PartsView = new ListCollectionView(inventory.AllParts);
-        SearchBarVm = new(PartsView);
+        SearchBarVm = new(PartsView, inventory.AllParts);
 
         var type = message.WindowType;
         WindowType = type;

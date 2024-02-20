@@ -2,12 +2,12 @@
 
 public class ErrorsChangedMessage
 {
-    public object Sender { get; set; }
+    public string Message { get; set; }
     public bool WasRemoved { get; set; }
 
-    public ErrorsChangedMessage(object source, bool wasRemoved = false)
+    public ErrorsChangedMessage(string message, bool wasRemoved = false)
     {
-        Sender = source;
+        Message = message;
         WasRemoved = wasRemoved;
     }
 }

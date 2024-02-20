@@ -55,10 +55,15 @@ public partial class InventoryItemCardVm : ObservableObject, IDataErrorInfo
         {
             if (prop == nameof(InStock)) { return CheckStock(); }
             if (prop == nameof(Min)) { return CheckMin(); }
-            if (prop == nameof(Max)) { return CheckMin(); }
+            if (prop == nameof(Max)) { return CheckMax(); }
             return string.Empty;
         }
     }
+
+    partial void OnInStockChanging(int oldValue, int newValue)
+    {
+    }
+
     private string CheckStock()
     {
         if (Min <= InStock && InStock <= Max) return string.Empty;
@@ -67,14 +72,14 @@ public partial class InventoryItemCardVm : ObservableObject, IDataErrorInfo
 
     private string CheckMin()
     {   if (Min <= InStock && Min <= Max) return string.Empty;
-        return "Min too high";
+        return "Min is higher than Inventory or Max.";
 
     }
 
     private string CheckMax()
     {
         if (Max >= InStock && Max >= Min) return string.Empty;
-        return "Max too low";
+        return "Max is lower than Inventory or Min.";
     }
 
     private void InitItem(InventoryItem? item)

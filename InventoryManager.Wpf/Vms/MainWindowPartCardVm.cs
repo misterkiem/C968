@@ -12,7 +12,7 @@ public class MainWindowPartCardVm : MainWindowCardVm
     Inventory Inventory { get; set; }
 
     public MainWindowPartCardVm(IDialogService dialogService, Inventory inventory)
-        : base(dialogService)
+        : base(dialogService, inventory.AllParts)
     {
         Inventory = inventory;
         ItemsView = new(inventory.AllParts);

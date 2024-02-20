@@ -58,14 +58,14 @@
         <TextBox Grid.Column="1"
                  Grid.Row="2"
                  x:Name="InventoryTextBox"
-                 Text="{Binding InStock, ValidatesOnDataErrors=True, NotifyOnValidationError=True}">
+                 Text="{Binding InStock, ValidatesOnDataErrors=True, NotifyOnValidationError=True, ValidatesOnExceptions=True}">
         </TextBox>
         <TextBlock Text="Price / Cost"
                    Grid.Row="3" />
         <TextBox Grid.Column="1"
                  Grid.Row="3"
                  x:Name="PriceTextBox"
-                 Text="{Binding Price, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+                 Text="{Binding Price, NotifyOnValidationError=True}" />
 
         <TextBlock Text="Max"
                    Grid.Row="4" />
@@ -77,13 +77,13 @@
                 <ColumnDefinition Width=".5*" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <TextBox Text="{Binding Max, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+            <TextBox Text="{Binding Max, ValidatesOnDataErrors=True, NotifyOnValidationError=True, ValidatesOnExceptions=True}"
                      x:Name="MaxTextBox" />
             <TextBlock Grid.Column="1"
                        Text="Min" />
             <TextBox Grid.Column="2"
                      Margin="0,10,10,10"
-                     Text="{Binding Min, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                     Text="{Binding Min, ValidatesOnDataErrors=True, NotifyOnValidationError=True, ValidatesOnExceptions=True}"
                      x:Name="MinTextBox" />
         </Grid>
     </Grid>

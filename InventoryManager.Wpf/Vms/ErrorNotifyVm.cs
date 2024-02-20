@@ -1,12 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using InventoryManager.Wpf.Messages;
+using System.Collections.ObjectModel;
 
 namespace InventoryManager.Wpf.Vms
 {
     public abstract class ErrorNotifyVm : ObservableObject
     {
-        List<object> _errors = new();
-        public bool HasNoErrors() => !_errors.Any();
+        public ObservableCollection<string> Errors { get; } = new();
+        public bool HasNoErrors() => !Errors.Any();
         
         protected ErrorNotifyVm()
         {
@@ -15,9 +16,9 @@ namespace InventoryManager.Wpf.Vms
 
         protected virtual void OnErrorsChanged(object recipient, ErrorsChangedMessage message)
         {
-            var sender = message.Sender;
-            if (message.WasRemoved) _errors.Remove(sender);
-            else _errors.Add(sender);
+            string errorMessage = message.Message;
+            if (message.WasRemoved) Errors.Remove(errorMessage);
+            else Errors.Add(errorMessage);
         }
     }
 }

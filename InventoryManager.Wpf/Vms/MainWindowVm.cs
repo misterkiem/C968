@@ -23,7 +23,7 @@ public partial class MainWindowVm : ObservableObject
     {
         Inventory = inventory;
         PartsCardVm = new(dialogService, Inventory);
-        ProductsCardVm = new(dialogService, new ListCollectionView(Inventory.Products));
+        ProductsCardVm = new(dialogService, new ListCollectionView(Inventory.Products), Inventory.Products);
     }
 
     [RelayCommand]
